@@ -51,7 +51,7 @@ public final class Organization {
     private BufferedImage logo;
     private URL web;
     private String mnemonic;
-    private String name;
+    private Name name;
 
 
     @Override
@@ -116,7 +116,7 @@ public final class Organization {
         return mnemonic;
     }
 
-    public String name() {
+    public Name name() {
         return name;
     }
 
@@ -125,22 +125,20 @@ public final class Organization {
             DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseRemoved(creditNumber, license));
     }
 
-    public void renamed(String name) {
-        name = Objects.requireNonNull(name, "name is required").trim();
-        if (!name.isEmpty() && !this.name.equals(name)) {
+    public void renamed(Name name) {
+        name = Objects.requireNonNull(name, "name is required");
+        if (!this.name.equals(name)) {
             this.name = name;
             DomainRegistry.domainEventPublisher().publish(new OrganizationRenamed(creditNumber, name));
         }
     }
 
-    private void setName(String name) {
-        name = Objects.requireNonNull(name, "name is required").trim();
-        if (name.isEmpty())
-            throw new IllegalArgumentException("Name cannot be empty.");
+    private void setName(Name name) {
+        name = Objects.requireNonNull(name, "name is required");
         this.name = name;
     }
 
     public OrganizationSnapshot toOrganizationSnapshot() {
-        return new OrganizationSnapshot(creditNumber, name);
+        return new OrganizationSnapshot(creditNumber, name.name());
     }
 }

@@ -22,9 +22,9 @@ import cc.foxtail.domainevent.domain.model.DomainEvent;
 import java.time.LocalDateTime;
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
- * @since JDK7.0
- * @version 0.0.1 2016年6月2日
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @since JDK8.0
+ * @version 0.0.1 2019-01-07
  */
 public final class DepartmentNameChanged implements DomainEvent {
     private long institutionId;

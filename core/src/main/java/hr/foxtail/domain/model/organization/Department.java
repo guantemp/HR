@@ -1,7 +1,5 @@
 /*
- * @(#}Department.java
- *
- * Copyright 2016 www.foxtail.cc rights Reserved.
+ * Copyright 2019 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +17,18 @@ package hr.foxtail.domain.model.organization;
 
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
- * @since JDK7.0
- * @version 0.0.1 2016年3月28日
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @since JDK8.0
+ * @version 0.0.1 2019-01-07
  */
 public final class Department {
     private String description;
     private String name;
-    private long organizationId;
+    private String creditNumber;
 
-    protected Department(long organizationId, String name, String description) {
+    protected Department(String creditNumber, String name, String description) {
         super();
-        this.organizationId = organizationId;
+        this.creditNumber = creditNumber;
         this.name = name;
         this.description = description;
     }
@@ -41,7 +39,7 @@ public final class Department {
         if (this.name.equals(name))
             throw new IllegalArgumentException("The name is unchanged.");
         this.name = name;
-        DomainRegistry.domainEventPublisher().publish(new DepartmentNameChanged(organizationId, name));
+        DomainRegistry.domainEventPublisher().publish(new DepartmentNameChanged(creditNumber, name));
     }
 
     public String description() {
@@ -57,7 +55,7 @@ public final class Department {
         if (getClass() != obj.getClass())
             return false;
         Department other = (Department) obj;
-        if (organizationId != other.organizationId)
+        if (creditNumber != other.creditNumber)
             return false;
         if (name == null) {
             if (other.name != null)
@@ -71,7 +69,7 @@ public final class Department {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (organizationId ^ (organizationId >>> 32));
+        result = prime * result + (int) (creditNumber ^ (creditNumber >>> 32));
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -80,12 +78,12 @@ public final class Department {
         return name;
     }
 
-    public long organizationId() {
-        return organizationId;
+    public String organizationId() {
+        return creditNumber;
     }
 
     @Override
     public String toString() {
-        return "Department [organizationId=" + organizationId + ", name=" + name + ", description=" + description + "]";
+        return "Department [creditNumber=" + creditNumber + ", name=" + name + ", description=" + description + "]";
     }
 }

@@ -29,9 +29,9 @@ public final class OrganizationRenamed implements DomainEvent {
     private String creditNumber;
     private LocalDateTime occurredOn;
     private int version;
-    private String name;
+    private Name name;
 
-    public OrganizationRenamed(String creditNumber, String name) {
+    public OrganizationRenamed(String creditNumber, Name name) {
         super();
         this.creditNumber = creditNumber;
         this.name = name;
@@ -53,7 +53,7 @@ public final class OrganizationRenamed implements DomainEvent {
         return version;
     }
 
-    public String name() {
+    public Name name() {
         return name;
     }
 }
