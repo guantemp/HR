@@ -24,10 +24,7 @@ import hr.foxtail.domain.model.organization.location.Location;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /***
@@ -37,6 +34,7 @@ import java.util.regex.Pattern;
  */
 public final class Organization {
     private static final Pattern CREDIT_NUMBER_PATTERN = Pattern.compile("^([159Y]{1})([1239]{1})([0-9ABCDEFGHJKLMNPQRTUWXY]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-90-9ABCDEFGHJKLMNPQRTUWXY])$");
+    private static final int DEPTH = 4;
     private String aboutUs;
     private Account BasicAccount;
     private Account generalAccount;
@@ -50,9 +48,13 @@ public final class Organization {
     private Set<License> licenses;
     private BufferedImage logo;
     private URL web;
-    private String mnemonic;
     private Name name;
+    private Deque<String> treePath;
 
+    public Organization(String creditNumber, Name name) {
+        this.creditNumber = creditNumber;
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -112,10 +114,6 @@ public final class Organization {
         return logo;
     }
 
-    public String mnemonic() {
-        return mnemonic;
-    }
-
     public Name name() {
         return name;
     }
@@ -140,5 +138,31 @@ public final class Organization {
 
     public OrganizationSnapshot toOrganizationSnapshot() {
         return new OrganizationSnapshot(creditNumber, name.name());
+    }
+
+    /**
+     * support depth is 32
+     *
+     * @param parent
+     */
+    public void assignTo(Organization parent) {
+        if (parent != null) {
+            treePath = new ArrayDeque<>();
+            if (parent.treePath != null && parent.treePath.size() < DEPTH) {
+                for (String s : parent.treePath) {
+                    treePath.offerLast(s);
+                }
+            }
+            treePath.offerLast(parent.creditNumber);
+            //DomainRegistry.domainEventPublisher().publish(new ResourceAssignedToResource(id, parent.id));
+        }
+    }
+
+    /**
+     * Will set treePath is <code>NULL</code>
+     */
+    public void unassign() {
+        treePath = null;
+        //DomainRegistry.domainEventPublisher().publish(new ResourceUnassigned(id));
     }
 }
