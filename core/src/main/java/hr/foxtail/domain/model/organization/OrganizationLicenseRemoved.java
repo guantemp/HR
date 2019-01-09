@@ -1,6 +1,4 @@
 /*
- * @(#}InstitutionLicenseRemoved.java
- *
  * Copyright 2016 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,31 +15,32 @@
  */
 package hr.foxtail.domain.model.organization;
 
-import cc.foxtail.domainevent.domain.model.DomainEvent;
+
+import event.foxtail.alpha.domain.model.DomainEvent;
 
 import java.time.LocalDateTime;
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
- * @since JDK7.0
- * @version 0.0.1 2016年6月2日
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @since JDK8.0
+ * @version 0.0.1 2019-01-07
  */
 public class OrganizationLicenseRemoved implements DomainEvent {
-    private long id;
+    private String creditNumber;
     private License license;
     private LocalDateTime occurredOn;
     private int version;
 
-    public OrganizationLicenseRemoved(long id, License license) {
+    public OrganizationLicenseRemoved(String creditNumber, License license) {
         super();
-        this.id = id;
+        this.creditNumber = creditNumber;
         this.license = license;
         this.occurredOn = LocalDateTime.now();
         this.version = 1;
     }
 
-    public long id() {
-        return id;
+    public String creditNumber() {
+        return creditNumber;
     }
 
     public License license() {
@@ -57,5 +56,4 @@ public class OrganizationLicenseRemoved implements DomainEvent {
     public int version() {
         return version;
     }
-
 }

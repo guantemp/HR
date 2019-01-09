@@ -1,7 +1,5 @@
 /*
- * @(#}InstitutionSnapshot.java
- *
- * Copyright 2016 www.foxtail.cc rights Reserved.
+ * Copyright 2019 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +16,21 @@
 package hr.foxtail.domain.model.organization;
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2016年11月15日
+ * @version 0.0.1 2019-01-07
  */
 public final class OrganizationSnapshot {
-    private long id;
+    private String creditNumber;
     private String name;
 
-    protected OrganizationSnapshot(long id, String name) {
-        super();
-        this.id = id;
+    protected OrganizationSnapshot(String creditNumber, String name) {
+        this.creditNumber = creditNumber;
         this.name = name;
     }
 
-    public long id() {
-        return id;
+    public String creditNumber() {
+        return creditNumber;
     }
 
     public String name() {

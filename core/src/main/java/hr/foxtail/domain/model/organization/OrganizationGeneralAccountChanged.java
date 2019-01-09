@@ -1,7 +1,5 @@
 /*
- * @(#}InstitutionOfficeMoved.java
- *
- * Copyright 2016 www.foxtail.cc rights Reserved.
+ * Copyright 2019 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,40 +15,46 @@
  */
 package hr.foxtail.domain.model.organization;
 
-import cc.foxtail.domainevent.domain.model.DomainEvent;
+
+import event.foxtail.alpha.domain.model.DomainEvent;
+import hr.foxtail.domain.model.organization.account.Account;
 
 import java.time.LocalDateTime;
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
- * @since JDK7.0
- * @version 0.0.1 2016年6月2日
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @since JDK8.0
+ * @version 0.0.1 2019-01-07
  */
-public class OrganizationOfficeMoved implements DomainEvent {
-    private long id;
+public final class OrganizationGeneralAccountChanged implements DomainEvent {
+    private Account generalAccount;
+    private String creditNumber;
     private LocalDateTime occurredOn;
-    private String office;
     private int version;
 
-    public OrganizationOfficeMoved(long id, String office) {
+    /**
+     * @param creditNumber
+     * @param generalAccount
+     */
+    public OrganizationGeneralAccountChanged(String creditNumber, Account generalAccount) {
         super();
-        this.id = id;
-        this.office = office;
+        this.creditNumber = creditNumber;
+        this.generalAccount = generalAccount;
         this.occurredOn = LocalDateTime.now();
         this.version = 1;
     }
 
-    public long id() {
-        return id;
+    public Account generalAccount() {
+        return generalAccount;
+    }
+
+    public String id() {
+        return creditNumber;
     }
 
     @Override
     public LocalDateTime occurredOn() {
         return occurredOn;
-    }
-
-    public String office() {
-        return office;
     }
 
     @Override

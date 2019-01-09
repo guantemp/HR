@@ -1,7 +1,5 @@
 /*
- * @(#}InstitutionCreated.java
- *
- * Copyright 2016 www.foxtail.cc rights Reserved.
+ * Copyright 2019 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +15,15 @@
  */
 package hr.foxtail.domain.model.organization;
 
-import cc.foxtail.domainevent.domain.model.DomainEvent;
+
+import event.foxtail.alpha.domain.model.DomainEvent;
 
 import java.time.LocalDateTime;
 
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
- * @since JDK7.0
- * @version 0.0.1 2016年3月30日
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @since JDK8.0
+ * @version 0.0.1 2019-01-07
  */
 public class OrganizationCreated implements DomainEvent {
     private LocalDateTime occurredOn;

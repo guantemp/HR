@@ -15,15 +15,18 @@
  */
 package hr.foxtail.domain.model.organization;
 
-import organization.foxtail.domain.DomainRegistry;
-import organization.foxtail.domain.model.organization.account.Account;
-import organization.foxtail.domain.model.organization.account.AlipayAccount;
-import organization.foxtail.domain.model.organization.account.WeChatAccount;
-import organization.foxtail.domain.model.organization.location.Location;
+
+import hr.foxtail.domain.DomainRegistry;
+import hr.foxtail.domain.model.organization.account.Account;
+import hr.foxtail.domain.model.organization.account.AlipayAccount;
+import hr.foxtail.domain.model.organization.account.WeChatAccount;
+import hr.foxtail.domain.model.organization.location.Location;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -36,7 +39,7 @@ public final class Organization {
     private static final Pattern CREDIT_NUMBER_PATTERN = Pattern.compile("^([159Y]{1})([1239]{1})([0-9ABCDEFGHJKLMNPQRTUWXY]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-90-9ABCDEFGHJKLMNPQRTUWXY])$");
     private String aboutUs;
     private Account BasicAccount;
-    private Account GeneralAccount;
+    private Account generalAccount;
     private AlipayAccount alipayAccount;
     private WeChatAccount weChatAccount;
     private String telephone;
@@ -49,6 +52,7 @@ public final class Organization {
     private URL web;
     private String mnemonic;
     private String name;
+
 
     @Override
     public boolean equals(Object o) {
@@ -75,7 +79,7 @@ public final class Organization {
         if (null == this.licenses)
             licenses = new HashSet<License>();
         if (licenses.add(license))
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseAdded(id, license));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseAdded(creditNumber, license));
     }
 
     public void changedAboutUs(String aboutUs) {
@@ -83,7 +87,7 @@ public final class Organization {
             return;
         if ((this.aboutUs == null && aboutUs != null) || (this.aboutUs != null && !this.aboutUs.equals(aboutUs))) {
             this.aboutUs = aboutUs;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationAboutUsChanged(id, aboutUs));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationAboutUsChanged(creditNumber, aboutUs));
         }
     }
 
@@ -92,7 +96,7 @@ public final class Organization {
             return;
         if ((this.logo == null && logo != null) || (this.logo != null && !this.logo.equals(logo))) {
             this.logo = logo;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLogoChanged(id, logo));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLogoChanged(creditNumber, logo));
         }
     }
 
@@ -100,12 +104,8 @@ public final class Organization {
         return creditNumber;
     }
 
-    public String id() {
-        return id;
-    }
-
-    public Set<License> licenses() {
-        return licenses;
+    public Iterator<License> licenses() {
+        return licenses.iterator();
     }
 
     public BufferedImage logo() {
@@ -122,26 +122,25 @@ public final class Organization {
 
     public void removedLicense(License license) {
         if (null != licenses && licenses.remove(license))
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseRemoved(id, license));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseRemoved(creditNumber, license));
     }
 
     public void renamed(String name) {
-        if (null == name || name.trim().isEmpty())
-            throw new IllegalArgumentException("Must provide a name or initial.");
-        if (!this.name.equals(name)) {
+        name = Objects.requireNonNull(name, "name is required").trim();
+        if (!name.isEmpty() && !this.name.equals(name)) {
             this.name = name;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationRenamed(id, name));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationRenamed(creditNumber, name));
         }
     }
 
-    protected void setName(String name) {
-        if (null == name || name.trim().isEmpty())
-            throw new IllegalArgumentException("Must provide a name or initial.");
+    private void setName(String name) {
+        name = Objects.requireNonNull(name, "name is required").trim();
+        if (name.isEmpty())
+            throw new IllegalArgumentException("Name cannot be empty.");
         this.name = name;
     }
 
     public OrganizationSnapshot toOrganizationSnapshot() {
-        return new OrganizationSnapshot(id, name);
+        return new OrganizationSnapshot(creditNumber, name);
     }
-
 }

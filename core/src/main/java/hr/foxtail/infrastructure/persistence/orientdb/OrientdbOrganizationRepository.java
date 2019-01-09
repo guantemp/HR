@@ -31,10 +31,10 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraphFactory;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.PipeFunction;
+import hr.foxtail.domain.model.organization.Organization;
 import org.nustaq.serialization.FSTConfiguration;
 
 import javax.money.MonetaryAmount;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -168,8 +168,7 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
         return LongId.generate();
     }
 
-    @Override
-    public Organization ofCreditNumber(String creditNumber) {
+    public Organization find(String creditNumber) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
@@ -198,8 +197,7 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
         return null;
     }
 
-    @Override
-    public Collection<Organization> ofMnemonic(String mnemonic) {
+    public Organization[] findByMnemonic(String mnemonic) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
@@ -209,7 +207,7 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
                     return argument.<String>getProperty("mnemonic").matches(DECORATION + mnemonic + DECORATION);
                 }
             });
-            Set<Organization> organizations = new HashSet<Organization>();
+            Organization[] organizations = new HashSet<Organization>();
             while (pipe.hasNext())
                 organizations.add(rebulider(pipe.next()));
             return organizations;
@@ -218,8 +216,7 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
         }
     }
 
-    @Override
-    public Collection<Organization> ofName(String name) {
+    public Organization[] findByName(String name) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
@@ -229,7 +226,7 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
                     return argument.<String>getProperty("name").matches(DECORATION + name + DECORATION);
                 }
             });
-            Set<Organization> organizations = new HashSet<Organization>();
+            Organization[] organizations = new HashSet<Organization>();
             while (pipe.hasNext())
                 organizations.add(rebulider(pipe.next()));
             return organizations;
@@ -302,11 +299,11 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
     }
 
     @Override
-    public void remove(Organization organization) {
+    public void remove(String creditNumber) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
-                    graph.getVerticesOfClass("Organization", false)).has("key", organization.id());
+                    graph.getVerticesOfClass("Organization", false)).has("key", creditNumber.id());
             if (pipe.hasNext()) {
                 Element element = pipe.next();
                 Pipe<Vertex, Vertex> lPipe = new GremlinPipeline<Vertex, Vertex>(element).out("Permit", "Has");
