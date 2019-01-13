@@ -168,11 +168,11 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
         return LongId.generate();
     }
 
-    public Organization find(String creditNumber) {
+    public Organization find(String unifiedSocialCreditCode) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
-                    graph.getVerticesOfClass("Organization", false)).has("creditNumber", creditNumber);
+                    graph.getVerticesOfClass("Organization", false)).has("unifiedSocialCreditCode", unifiedSocialCreditCode);
             if (pipe.hasNext()) {
                 return rebulider(pipe.next());
             }
@@ -299,11 +299,11 @@ public final class OrientdbOrganizationRepository implements OrganizationReposit
     }
 
     @Override
-    public void remove(String creditNumber) {
+    public void remove(String unifiedSocialCreditCode) {
         OrientGraph graph = factory.getTx();
         try {
             Pipe<Vertex, ? extends Element> pipe = new GremlinPipeline<Vertex, Vertex>(
-                    graph.getVerticesOfClass("Organization", false)).has("key", creditNumber.id());
+                    graph.getVerticesOfClass("Organization", false)).has("key", unifiedSocialCreditCode.id());
             if (pipe.hasNext()) {
                 Element element = pipe.next();
                 Pipe<Vertex, Vertex> lPipe = new GremlinPipeline<Vertex, Vertex>(element).out("Permit", "Has");

@@ -21,19 +21,19 @@ package hr.foxtail.domain.model.organization;
  * @version 0.0.1 2019-01-07
  */
 public final class OrganizationSnapshot {
-    private String creditNumber;
-    private String name;
+    private String unifiedSocialCreditCode;
+    private Name name;
 
-    protected OrganizationSnapshot(String creditNumber, String name) {
-        this.creditNumber = creditNumber;
+    protected OrganizationSnapshot(String unifiedSocialCreditCode, Name name) {
+        this.unifiedSocialCreditCode = unifiedSocialCreditCode;
         this.name = name;
     }
 
-    public String creditNumber() {
-        return creditNumber;
+    public String unifiedSocialCreditCode() {
+        return unifiedSocialCreditCode;
     }
 
-    public String name() {
+    public Name name() {
         return name;
     }
 }

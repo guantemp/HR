@@ -23,12 +23,16 @@ package hr.foxtail.domain.model.organization;
 public interface OrganizationRepository {
 
     /**
-     * @param creditNumber
+     * @param unifiedSocialCreditCode
      * @return
      */
-    Organization find(String creditNumber);
+    Organization find(String unifiedSocialCreditCode);
 
-    Organization[] child(String parentCreditNumber);
+    /**
+     * @param parentUnifiedSocialCreditCode
+     * @return
+     */
+    Organization[] child(String parentUnifiedSocialCreditCode);
 
     /**
      * @param mnemonic
@@ -43,9 +47,9 @@ public interface OrganizationRepository {
     Organization[] findByName(String name);
 
     /**
-     * @param creditNumber
+     * @param unifiedSocialCreditCode
      */
-    void remove(String creditNumber);
+    void remove(String unifiedSocialCreditCode);
 
     /**
      * @param organization

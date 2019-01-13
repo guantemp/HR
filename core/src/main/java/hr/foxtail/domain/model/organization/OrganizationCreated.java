@@ -17,8 +17,15 @@ package hr.foxtail.domain.model.organization;
 
 
 import event.foxtail.alpha.domain.model.DomainEvent;
+import hr.foxtail.domain.model.organization.account.Account;
+import hr.foxtail.domain.model.organization.account.Alibaba;
+import hr.foxtail.domain.model.organization.account.WeChat;
+import hr.foxtail.domain.model.organization.location.Location;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
@@ -28,7 +35,18 @@ import java.time.LocalDateTime;
 public class OrganizationCreated implements DomainEvent {
     private LocalDateTime occurredOn;
     private int version;
-
+    private String aboutUs;
+    private Account BasicAccount;
+    private Account generalAccount;
+    private Alibaba alibaba;
+    private WeChat weChat;
+    private Contact contact;
+    private Location location;
+    private String unifiedSocialCreditCode;
+    private Set<License> licenses;
+    private BufferedImage logo;
+    private URL homepage;
+    private Name name;
     @Override
     public LocalDateTime occurredOn() {
         return occurredOn;

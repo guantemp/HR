@@ -40,7 +40,6 @@ public final class License {
     }
 
     public License(String name, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage picture) {
-        super();
         setName(name);
         setNumber(number);
         this.issuer = issuer;
@@ -73,6 +72,10 @@ public final class License {
 
     public LocalDate expiryOn() {
         return expiryOn;
+    }
+
+    public boolean isExpired() {
+        return false;
     }
 
     @Override

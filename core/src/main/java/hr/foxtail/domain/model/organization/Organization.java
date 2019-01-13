@@ -18,13 +18,14 @@ package hr.foxtail.domain.model.organization;
 
 import hr.foxtail.domain.DomainRegistry;
 import hr.foxtail.domain.model.organization.account.Account;
-import hr.foxtail.domain.model.organization.account.AlipayAccount;
-import hr.foxtail.domain.model.organization.account.WeChatAccount;
+import hr.foxtail.domain.model.organization.account.Alibaba;
+import hr.foxtail.domain.model.organization.account.WeChat;
 import hr.foxtail.domain.model.organization.location.Location;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
@@ -34,26 +35,51 @@ import java.util.regex.Pattern;
  */
 public final class Organization {
     private static final Pattern CREDIT_NUMBER_PATTERN = Pattern.compile("^([159Y]{1})([1239]{1})([0-9ABCDEFGHJKLMNPQRTUWXY]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-90-9ABCDEFGHJKLMNPQRTUWXY])$");
-    private static final int DEPTH = 4;
+    //Depth of organization tree
+    private static final int DEPTH = 8;
     private String aboutUs;
     private Account BasicAccount;
     private Account generalAccount;
-    private AlipayAccount alipayAccount;
-    private WeChatAccount weChatAccount;
-    private String telephone;
-    private String fax;
-    private String email;
+    private Alibaba alibaba;
+    private WeChat weChat;
+    private Contact contact;
     private Location location;
-    private String creditNumber;
+    private String unifiedSocialCreditCode;
     private Set<License> licenses;
     private BufferedImage logo;
-    private URL web;
+    private URL homepage;
     private Name name;
     private Deque<String> treePath;
 
-    public Organization(String creditNumber, Name name) {
-        this.creditNumber = creditNumber;
-        this.name = name;
+    /**
+     * @param unifiedSocialCreditCode
+     * @param name
+     */
+    public Organization(String unifiedSocialCreditCode, Name name) {
+        this(unifiedSocialCreditCode, name, null, null, null, null, null, null, null, null, null, null);
+    }
+
+    public Organization(String unifiedSocialCreditCode, Name name, Location location, Contact contact, String aboutUs, BufferedImage logo,
+                        Account basicAccount, Account generalAccount, Alibaba alibaba, WeChat weChat, Set<License> licenses, URL homepage) {
+        setUnifiedSocialCreditCode(unifiedSocialCreditCode);
+        setName(name);
+        this.location = location;
+        this.contact = contact;
+        this.aboutUs = aboutUs;
+        this.logo = logo;
+        this.BasicAccount = basicAccount;
+        this.generalAccount = generalAccount;
+        this.alibaba = alibaba;
+        this.weChat = weChat;
+        this.licenses = licenses;
+        this.homepage = homepage;
+    }
+
+    private void setUnifiedSocialCreditCode(String unifiedSocialCreditCode) {
+        Matcher matcher = CREDIT_NUMBER_PATTERN.matcher(unifiedSocialCreditCode);
+        if (!matcher.matches())
+            throw new IllegalArgumentException("Illegal Unified Social Credit Code");
+        this.unifiedSocialCreditCode = unifiedSocialCreditCode;
     }
 
     @Override
@@ -63,47 +89,51 @@ public final class Organization {
 
         Organization that = (Organization) o;
 
-        return creditNumber != null ? creditNumber.equals(that.creditNumber) : that.creditNumber == null;
+        return unifiedSocialCreditCode != null ? unifiedSocialCreditCode.equals(that.unifiedSocialCreditCode) : that.unifiedSocialCreditCode == null;
     }
 
     @Override
     public int hashCode() {
-        return creditNumber != null ? creditNumber.hashCode() : 0;
+        return unifiedSocialCreditCode != null ? unifiedSocialCreditCode.hashCode() : 0;
     }
 
     public String aboutUs() {
         return aboutUs;
     }
 
-    public void addedLicense(License license) {
+    public OrganizationSnapshot toOrganizationSnapshot() {
+        return new OrganizationSnapshot(unifiedSocialCreditCode, name);
+    }
+
+    public void addLicense(License license) {
         if (null == license)
             return;
         if (null == this.licenses)
             licenses = new HashSet<License>();
         if (licenses.add(license))
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseAdded(creditNumber, license));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseAdded(unifiedSocialCreditCode, license));
     }
 
-    public void changedAboutUs(String aboutUs) {
+    public void changeAboutUs(String aboutUs) {
         if (this.aboutUs == null && aboutUs == null)
             return;
         if ((this.aboutUs == null && aboutUs != null) || (this.aboutUs != null && !this.aboutUs.equals(aboutUs))) {
             this.aboutUs = aboutUs;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationAboutUsChanged(creditNumber, aboutUs));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationAboutUsChanged(unifiedSocialCreditCode, aboutUs));
         }
     }
 
-    public void changedLogo(BufferedImage logo) {
+    public void changeLogo(BufferedImage logo) {
         if (this.logo == null && logo == null)
             return;
         if ((this.logo == null && logo != null) || (this.logo != null && !this.logo.equals(logo))) {
             this.logo = logo;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLogoChanged(creditNumber, logo));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLogoChanged(unifiedSocialCreditCode, logo));
         }
     }
 
     public String creditNumber() {
-        return creditNumber;
+        return unifiedSocialCreditCode;
     }
 
     public Iterator<License> licenses() {
@@ -118,30 +148,25 @@ public final class Organization {
         return name;
     }
 
-    public void removedLicense(License license) {
+    public void removeLicense(License license) {
         if (null != licenses && licenses.remove(license))
-            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseRemoved(creditNumber, license));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationLicenseRemoved(unifiedSocialCreditCode, license));
     }
 
-    public void renamed(Name name) {
-        name = Objects.requireNonNull(name, "name is required");
+    public void rename(Name name) {
+        Objects.requireNonNull(name, "name is required");
         if (!this.name.equals(name)) {
             this.name = name;
-            DomainRegistry.domainEventPublisher().publish(new OrganizationRenamed(creditNumber, name));
+            DomainRegistry.domainEventPublisher().publish(new OrganizationRenamed(unifiedSocialCreditCode, name));
         }
     }
 
     private void setName(Name name) {
-        name = Objects.requireNonNull(name, "name is required");
-        this.name = name;
-    }
-
-    public OrganizationSnapshot toOrganizationSnapshot() {
-        return new OrganizationSnapshot(creditNumber, name.name());
+        this.name = Objects.requireNonNull(name, "name is required");
     }
 
     /**
-     * support depth is 32
+     * support depth is 8
      *
      * @param parent
      */
@@ -153,8 +178,8 @@ public final class Organization {
                     treePath.offerLast(s);
                 }
             }
-            treePath.offerLast(parent.creditNumber);
-            //DomainRegistry.domainEventPublisher().publish(new ResourceAssignedToResource(id, parent.id));
+            treePath.offerLast(parent.unifiedSocialCreditCode);
+            DomainRegistry.domainEventPublisher().publish(new OrganizationAssignedToOrganization(unifiedSocialCreditCode, parent.unifiedSocialCreditCode));
         }
     }
 
@@ -164,5 +189,56 @@ public final class Organization {
     public void unassign() {
         treePath = null;
         //DomainRegistry.domainEventPublisher().publish(new ResourceUnassigned(id));
+    }
+
+
+    public Account basicAccount() {
+        return BasicAccount;
+    }
+
+    public Account generalAccount() {
+        return generalAccount;
+    }
+
+    public Alibaba alibaba() {
+        return alibaba;
+    }
+
+    public WeChat weChat() {
+        return weChat;
+    }
+
+    public Contact contact() {
+        return contact;
+    }
+
+    public Location location() {
+        return location;
+    }
+
+    public Iterator<License> getLicenses() {
+        return licenses.iterator();
+    }
+
+    public URL homepage() {
+        return homepage;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Organization.class.getSimpleName() + "[", "]")
+                .add("aboutUs='" + aboutUs + "'")
+                .add("BasicAccount=" + BasicAccount)
+                .add("generalAccount=" + generalAccount)
+                .add("alibaba=" + alibaba)
+                .add("weChat=" + weChat)
+                .add("contact=" + contact)
+                .add("location=" + location)
+                .add("unifiedSocialCreditCode='" + unifiedSocialCreditCode + "'")
+                .add("licenses=" + licenses)
+                .add("logo=" + logo)
+                .add("homepage=" + homepage)
+                .add("name=" + name)
+                .toString();
     }
 }

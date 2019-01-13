@@ -39,7 +39,7 @@ public final class Name {
      */
     public Name(String name, String mnemonic) {
         setName(name);
-        this.mnemonic = mnemonic;
+        setMnemonic(mnemonic);
     }
 
 
@@ -49,7 +49,7 @@ public final class Name {
      */
     public Name(String name) {
         setName(name);
-        this.mnemonic = PinYin.toShortPinYing(this.name);
+        setMnemonic(PinYin.toShortPinYing(this.name));
     }
 
     public String name() {
@@ -58,6 +58,10 @@ public final class Name {
 
     private void setName(String name) {
         this.name = Objects.requireNonNull(name, "name required").trim();
+    }
+
+    private void setMnemonic(String mnemonic) {
+        this.mnemonic = Objects.requireNonNull(mnemonic, "mnemonic is required").trim();
     }
 
     public String mnemonic() {
