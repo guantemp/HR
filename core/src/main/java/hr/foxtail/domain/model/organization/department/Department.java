@@ -16,6 +16,13 @@
 package hr.foxtail.domain.model.organization.department;
 
 
+import hr.foxtail.domain.model.location.Location;
+import hr.foxtail.domain.model.organization.Contact;
+
+import java.util.Deque;
+import java.util.Objects;
+import java.util.StringJoiner;
+
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
@@ -23,67 +30,71 @@ package hr.foxtail.domain.model.organization.department;
  */
 public final class Department {
     private String description;
+    //Depth of department tree
+    private static final int DEPTH = 8;
     private String name;
-    private String creditNumber;
+    private String id;
+    private String organizationUnifiedSocialCreditCode;
+    private Deque<String> treePath;
+    private Location location;
+    private Contact contact;
 
-    protected Department(String creditNumber, String name, String description) {
-        super();
-        this.creditNumber = creditNumber;
-        this.name = name;
+    protected Department(String id, String organizationUnifiedSocialCreditCode, String name) {
+        this(id, organizationUnifiedSocialCreditCode, name, null, null, null);
+    }
+
+    protected Department(String id, String organizationUnifiedSocialCreditCode, String name, Location location, Contact contact, String description) {
+        setId(id);
+        setOrganizationUnifiedSocialCreditCode(organizationUnifiedSocialCreditCode);
+        setName(name);
+        this.location = location;
+        this.contact = contact;
         this.description = description;
     }
 
-    public void changeName(String name) {
-        if (name == null)
-            throw new IllegalArgumentException("Must provide a name.");
-        if (this.name.equals(name))
-            throw new IllegalArgumentException("The name is unchanged.");
-        this.name = name;
-        DomainRegistry.domainEventPublisher().publish(new DepartmentNameChanged(creditNumber, name));
+    private void setOrganizationUnifiedSocialCreditCode(String organizationUnifiedSocialCreditCode) {
+    }
+
+    private void setName(String name) {
+        this.name = Objects.requireNonNull(id, "name is required.");
+    }
+
+    private void setId(String id) {
+        this.id = Objects.requireNonNull(id, "id is required.");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Department that = (Department) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Department.class.getSimpleName() + "[", "]")
+                .add("description='" + description + "'")
+                .add("id='" + id + "'")
+                .add("name='" + name + "'")
+                .add("organizationUnifiedSocialCreditCode='" + organizationUnifiedSocialCreditCode + "'")
+                .add("location=" + location)
+                .add("contact=" + contact)
+                .toString();
     }
 
     public String description() {
         return description;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Department other = (Department) obj;
-        if (creditNumber != other.creditNumber)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (creditNumber ^ (creditNumber >>> 32));
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public String organizationId() {
-        return creditNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Department [creditNumber=" + creditNumber + ", name=" + name + ", description=" + description + "]";
+    public Location location() {
+        return location;
     }
 }

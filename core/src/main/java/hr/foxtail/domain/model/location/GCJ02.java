@@ -1,4 +1,4 @@
-package hr.foxtail.domain.model.organization.location;
+package hr.foxtail.domain.model.location;
 
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>

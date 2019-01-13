@@ -1,21 +1,19 @@
 /*
- * Setup.java
+ * Copyright (c) 2019 www.foxtail.cc All rights Reserved.
  *
- * Copyright 2016 www.foxtail.cc rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ *  See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package hr.foxtail.infrastructure.persistence.orientdb;
+package hr.foxtail.infrastructure.persistence;
 
 import cc.foxtail.assistant.util.UrlHelper;
 import com.orientechnologies.orient.client.remote.OServerAdmin;
@@ -44,7 +42,7 @@ import java.util.Objects;
  * @since JDK8.0
  * @version 0.0.1 2016年11月13日
  */
-public final class Setup {
+public final class SetupOranization {
     private static String database;
     private static int max;
     private static int min;
@@ -83,8 +81,8 @@ public final class Setup {
     }
 
     public static void main(String[] args) throws IOException {
-        Setup setup = new Setup();
-        setup.createDatabse();
+        SetupOranization setupOranization = new SetupOranization();
+        setupOranization.createDatabse();
     }
 
     public void createDatabse() throws IOException {

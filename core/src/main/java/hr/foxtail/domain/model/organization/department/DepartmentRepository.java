@@ -15,7 +15,6 @@
  */
 package hr.foxtail.domain.model.organization.department;
 
-import java.util.Collection;
 
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
@@ -23,9 +22,31 @@ import java.util.Collection;
  * @version 0.0.1 2019-01-07
  */
 public interface DepartmentRepository {
-    Collection<Department> departmentOfInstitution(long institutionId);
+    /**
+     * @param organizationUnifiedSocialCreditCode
+     * @return
+     */
+    Department[] findByOrganization(String organizationUnifiedSocialCreditCode);
 
-    void remove(Department department);
+    /**
+     * @param deptId
+     * @return
+     */
+    Department[] findByDepartment(DeptId deptId);
 
+    /**
+     * @param deptId
+     * @return
+     */
+    Department find(DeptId deptId);
+
+    /**
+     * @param deptId
+     */
+    void remove(DeptId deptId);
+
+    /**
+     * @param department
+     */
     void save(Department department);
 }

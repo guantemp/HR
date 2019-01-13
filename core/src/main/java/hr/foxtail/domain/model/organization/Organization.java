@@ -17,10 +17,11 @@ package hr.foxtail.domain.model.organization;
 
 
 import hr.foxtail.domain.DomainRegistry;
+import hr.foxtail.domain.model.location.Location;
 import hr.foxtail.domain.model.organization.account.Account;
 import hr.foxtail.domain.model.organization.account.Alibaba;
 import hr.foxtail.domain.model.organization.account.WeChat;
-import hr.foxtail.domain.model.organization.location.Location;
+import hr.foxtail.domain.model.organization.department.Department;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
 public final class Organization {
     private static final Pattern CREDIT_NUMBER_PATTERN = Pattern.compile("^([159Y]{1})([1239]{1})([0-9ABCDEFGHJKLMNPQRTUWXY]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-90-9ABCDEFGHJKLMNPQRTUWXY])$");
     //Depth of organization tree
-    private static final int DEPTH = 8;
+    private static final int DEPTH = 16;
     private String aboutUs;
     private Account BasicAccount;
     private Account generalAccount;
@@ -90,6 +91,11 @@ public final class Organization {
         Organization that = (Organization) o;
 
         return unifiedSocialCreditCode != null ? unifiedSocialCreditCode.equals(that.unifiedSocialCreditCode) : that.unifiedSocialCreditCode == null;
+    }
+
+    public Department establishDepartment(String name, String desc) {
+        return null;
+        //return new Department(unifiedSocialCreditCode,name,desc);
     }
 
     @Override
@@ -166,17 +172,18 @@ public final class Organization {
     }
 
     /**
-     * support depth is 8
+     * support depth is 16
      *
      * @param parent
      */
     public void assignTo(Organization parent) {
         if (parent != null) {
             treePath = new ArrayDeque<>();
-            if (parent.treePath != null && parent.treePath.size() < DEPTH) {
+            if (parent.treePath != null && parent.treePath.size() >= DEPTH)
+                throw new IllegalStateException("Allow only depths of" + DEPTH);
+            else
                 for (String s : parent.treePath) {
                     treePath.offerLast(s);
-                }
             }
             treePath.offerLast(parent.unifiedSocialCreditCode);
             DomainRegistry.domainEventPublisher().publish(new OrganizationAssignedToOrganization(unifiedSocialCreditCode, parent.unifiedSocialCreditCode));

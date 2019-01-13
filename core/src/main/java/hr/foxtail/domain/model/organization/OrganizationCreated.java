@@ -17,10 +17,10 @@ package hr.foxtail.domain.model.organization;
 
 
 import event.foxtail.alpha.domain.model.DomainEvent;
+import hr.foxtail.domain.model.location.Location;
 import hr.foxtail.domain.model.organization.account.Account;
 import hr.foxtail.domain.model.organization.account.Alibaba;
 import hr.foxtail.domain.model.organization.account.WeChat;
-import hr.foxtail.domain.model.organization.location.Location;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;

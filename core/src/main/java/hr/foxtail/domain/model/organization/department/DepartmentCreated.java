@@ -1,7 +1,5 @@
 /*
- * @(#}DepartmentCreated.java
- *
- * Copyright 2016 www.foxtail.cc rights Reserved.
+ * Copyright 2019 www.foxtail.cc rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +16,9 @@
 package hr.foxtail.domain.model.organization.department;
 
 
+import event.foxtail.alpha.domain.model.DomainEvent;
+import hr.foxtail.domain.model.location.Location;
+
 import java.time.LocalDateTime;
 
 /***
@@ -27,30 +28,29 @@ import java.time.LocalDateTime;
  */
 public final class DepartmentCreated implements DomainEvent {
     private String description;
-    private long institutionId;
-    private String name;
+    private DeptId deptId;
+    private Location location;
     private LocalDateTime occurredOn;
     private int version;
 
-    protected DepartmentCreated(long institutionId, String name, String description) {
-        super();
-        this.occurredOn = LocalDateTime.now();
-        this.version = 1;
-        this.name = name;
+    public DepartmentCreated(DeptId deptId, Location location, String description) {
         this.description = description;
-        this.institutionId = institutionId;
+        this.deptId = deptId;
+        this.location = location;
+        version = 1;
+        occurredOn = LocalDateTime.now();
     }
 
     public String description() {
         return description;
     }
 
-    public long institutionId() {
-        return institutionId;
+    public DeptId deptId() {
+        return deptId;
     }
 
-    public String name() {
-        return name;
+    public Location location() {
+        return location;
     }
 
     @Override
@@ -62,5 +62,4 @@ public final class DepartmentCreated implements DomainEvent {
     public int version() {
         return version;
     }
-
 }

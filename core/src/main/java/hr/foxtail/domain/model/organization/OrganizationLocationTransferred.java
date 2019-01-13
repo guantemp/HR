@@ -19,7 +19,7 @@ package hr.foxtail.domain.model.organization;
 
 
 import event.foxtail.alpha.domain.model.DomainEvent;
-import hr.foxtail.domain.model.organization.location.Location;
+import hr.foxtail.domain.model.location.Location;
 
 import java.time.LocalDateTime;
 
