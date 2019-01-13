@@ -34,25 +34,25 @@ public final class Department {
     private static final int DEPTH = 8;
     private String name;
     private String id;
-    private String organizationUnifiedSocialCreditCode;
+    private String organizationId;
     private Deque<String> treePath;
     private Location location;
     private Contact contact;
 
-    protected Department(String id, String organizationUnifiedSocialCreditCode, String name) {
-        this(id, organizationUnifiedSocialCreditCode, name, null, null, null);
+    protected Department(String organizationId, String id, String name) {
+        this(organizationId, id, name, null, null, null);
     }
 
-    protected Department(String id, String organizationUnifiedSocialCreditCode, String name, Location location, Contact contact, String description) {
+    protected Department(String organizationId, String id, String name, Location location, Contact contact, String description) {
+        setOrganizationId(organizationId);
         setId(id);
-        setOrganizationUnifiedSocialCreditCode(organizationUnifiedSocialCreditCode);
         setName(name);
         this.location = location;
         this.contact = contact;
         this.description = description;
     }
 
-    private void setOrganizationUnifiedSocialCreditCode(String organizationUnifiedSocialCreditCode) {
+    private void setOrganizationId(String organizationId) {
     }
 
     private void setName(String name) {
@@ -84,10 +84,26 @@ public final class Department {
                 .add("description='" + description + "'")
                 .add("id='" + id + "'")
                 .add("name='" + name + "'")
-                .add("organizationUnifiedSocialCreditCode='" + organizationUnifiedSocialCreditCode + "'")
+                .add("organizationId='" + organizationId + "'")
                 .add("location=" + location)
                 .add("contact=" + contact)
                 .toString();
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public String organizationId() {
+        return organizationId;
+    }
+
+    public Contact contact() {
+        return contact;
     }
 
     public String description() {
