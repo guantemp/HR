@@ -13,27 +13,28 @@
  *  See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package hr.foxtail.domain.model.organization.employee;
 
 import java.util.regex.Pattern;
 
 /***
- * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @author <a href="www.foxtail.cc/authors/guan xianghuang">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2019-01-14
+ * @version 0.0.1 builder 2019-01-14
  */
-public final class Person {
-    private static final Pattern MOBILE_PHONE_PATTERN = Pattern.compile("^[1](([3][0-9])|([4][5,7,9])|([5][^4,6,9])|([6][6])|([7][3,5,6,7,8])|([8][0-9])|([9][8,9]))[0-9]{8}$");
-    private static final Pattern IDCARD_PATTERN = Pattern.compile("");
-    private Gender gender;
+public final class IdCard {
+    private static final Pattern NUMBER = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
+    private long id;
+    private String number;
     private String name;
-    private String idCard;
-    private String mobilePhone;
+    private Address address;
 
-    public enum Gender {
-        MALE, FEMALE
+    public Sex sex() {
+        return Sex.MAN;
     }
 
-    ;
+    public enum Sex {
+        WOMEN, MAN, UNKOWN
+    }
+
 }
