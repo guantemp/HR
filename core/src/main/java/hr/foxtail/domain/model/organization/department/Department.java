@@ -16,9 +16,11 @@
 package hr.foxtail.domain.model.organization.department;
 
 
+import hr.foxtail.domain.DomainRegistry;
 import hr.foxtail.domain.model.location.Location;
 import hr.foxtail.domain.model.organization.Contact;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -39,10 +41,23 @@ public final class Department {
     private Location location;
     private Contact contact;
 
+    /**
+     * @param organizationId
+     * @param id
+     * @param name
+     */
     protected Department(String organizationId, String id, String name) {
         this(organizationId, id, name, null, null, null);
     }
 
+    /**
+     * @param organizationId
+     * @param id
+     * @param name
+     * @param location
+     * @param contact
+     * @param description
+     */
     protected Department(String organizationId, String id, String name, Location location, Contact contact, String description) {
         setOrganizationId(organizationId);
         setId(id);
@@ -53,10 +68,10 @@ public final class Department {
     }
 
     private void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
     }
-
     private void setName(String name) {
-        this.name = Objects.requireNonNull(id, "name is required.");
+        this.name = Objects.requireNonNull(id, "name is required.").trim();
     }
 
     private void setId(String id) {
@@ -90,8 +105,43 @@ public final class Department {
                 .toString();
     }
 
+    /**
+     * support depth is 8
+     *
+     * @param parent
+     */
+    public void assignTo(Department parent) {
+        if (parent != null) {
+            treePath = new ArrayDeque<>();
+            if (parent.treePath != null && parent.treePath.size() >= DEPTH)
+                throw new IllegalStateException("Allow only depths of" + DEPTH);
+            else
+                for (String s : parent.treePath) {
+                    treePath.offerLast(s);
+                }
+            treePath.offerLast(parent.id);
+            //DomainRegistry.domainEventPublisher().publish(new OrganizationAssignedToOrganization(unifiedSocialCreditCode, parent.unifiedSocialCreditCode));
+        }
+    }
+
+    /**
+     * Will set treePath is <code>NULL</code>
+     */
+    public void unassign() {
+        treePath = null;
+        //DomainRegistry.domainEventPublisher().publish(new ResourceUnassigned(id));
+    }
+
     public String name() {
         return name;
+    }
+
+    public void rename(String name) {
+        name = Objects.requireNonNull(name, "name is required").trim();
+        if (!this.name.equals(name)) {
+            setName(name);
+            DomainRegistry.domainEventPublisher().publish(new DepartmentRenamed(id, name));
+        }
     }
 
     public String id() {

@@ -18,6 +18,7 @@ package hr.foxtail.domain.model.organization.department;
 
 import event.foxtail.alpha.domain.model.DomainEvent;
 import hr.foxtail.domain.model.location.Location;
+import hr.foxtail.domain.model.organization.Contact;
 
 import java.time.LocalDateTime;
 
@@ -28,14 +29,20 @@ import java.time.LocalDateTime;
  */
 public final class DepartmentCreated implements DomainEvent {
     private String description;
-    private DeptId deptId;
+    private String name;
+    private String id;
+    private String organizationId;
+    private Contact contact;
     private Location location;
     private LocalDateTime occurredOn;
     private int version;
 
-    public DepartmentCreated(DeptId deptId, Location location, String description) {
+    public DepartmentCreated(String description, String name, String id, String organizationId, Contact contact, Location location) {
         this.description = description;
-        this.deptId = deptId;
+        this.name = name;
+        this.id = id;
+        this.organizationId = organizationId;
+        this.contact = contact;
         this.location = location;
         version = 1;
         occurredOn = LocalDateTime.now();
@@ -45,8 +52,20 @@ public final class DepartmentCreated implements DomainEvent {
         return description;
     }
 
-    public DeptId deptId() {
-        return deptId;
+    public String name() {
+        return name;
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public String organizationId() {
+        return organizationId;
+    }
+
+    public Contact contact() {
+        return contact;
     }
 
     public Location location() {
