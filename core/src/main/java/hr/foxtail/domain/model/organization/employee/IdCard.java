@@ -42,7 +42,6 @@ public class IdCard extends License {
         this.address = address;
     }
 
-
     @Override
     protected void setType(Type type) {
         type = Type.IDCARD;
@@ -56,7 +55,6 @@ public class IdCard extends License {
     public Nation nation() {
         return nation;
     }
-
 
     public enum Gender {
         MALE, FEMALE
