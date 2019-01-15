@@ -23,7 +23,7 @@ import java.time.LocalDate;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class License {
+public  class License {
     private LocalDate expiryOn;
     private LocalDate issueOn;
     private String issuer;

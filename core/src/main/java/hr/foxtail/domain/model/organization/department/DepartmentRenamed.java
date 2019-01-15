@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
  * @since JDK8.0
  * @version 0.0.1 2019-01-14
  */
-public final class DepartmentRenamed implements DomainEvent {
+public class DepartmentRenamed implements DomainEvent {
     private LocalDateTime occurredOn;
     private int version;
     private String id;

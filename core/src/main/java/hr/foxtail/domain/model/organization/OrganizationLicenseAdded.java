@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class OrganizationLicenseAdded implements DomainEvent {
+public  class OrganizationLicenseAdded implements DomainEvent {
     private String creditNumber;
     private License license;
     private LocalDateTime occurredOn;

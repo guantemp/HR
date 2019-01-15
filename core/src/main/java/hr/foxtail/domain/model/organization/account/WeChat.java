@@ -5,7 +5,7 @@ package hr.foxtail.domain.model.organization.account;
  * @since JDK8.0
  * @version 0.0.1 2019-01-10
  */
-public final class WeChat {
+public  class WeChat {
     private String weChatAccount;
     private String wechatPublicNumber;
 }

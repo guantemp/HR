@@ -28,7 +28,7 @@ import java.util.StringJoiner;
  * @since JDK8.0
  * @version 0.0.1 builder 2018-06-11
  */
-public final class Name {
+public  class Name {
     private String name;
     private String mnemonic;
 

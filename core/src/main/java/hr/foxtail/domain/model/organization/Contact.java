@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 builder 2018-07-13
  */
-public final class Contact {
+public  class Contact {
     private static final Pattern TELEPHONE = Pattern.compile("^(0\\d{2}-\\d{8}(-\\d{1,4})?)|(0\\d{3}-\\d{7,8}(-\\d{1,4})?)$");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
     private String telephone;

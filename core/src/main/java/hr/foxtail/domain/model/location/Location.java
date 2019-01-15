@@ -22,7 +22,7 @@ import java.util.Locale;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class Location {
+public  class Location {
     private GCJ02 gcj02;
     // such as Chinese
     private Locale locale;

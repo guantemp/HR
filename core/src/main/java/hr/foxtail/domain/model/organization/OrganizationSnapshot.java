@@ -20,7 +20,7 @@ package hr.foxtail.domain.model.organization;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class OrganizationSnapshot {
+public  class OrganizationSnapshot {
     private String unifiedSocialCreditCode;
     private Name name;
 

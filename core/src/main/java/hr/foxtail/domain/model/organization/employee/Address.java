@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 builder 2018-07-19
  */
-public final class Address {
+public class Address {
     private static final Pattern POSTCODE_PATTERN = Pattern.compile("^\\d{6}$");
     //such as luzhou
     private String city;

@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class Organization {
+public class Organization {
     private static final Pattern CREDIT_NUMBER_PATTERN = Pattern.compile("^([159Y]{1})([1239]{1})([0-9ABCDEFGHJKLMNPQRTUWXY]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-90-9ABCDEFGHJKLMNPQRTUWXY])$");
     //Depth of organization tree
     private static final int DEPTH = 16;

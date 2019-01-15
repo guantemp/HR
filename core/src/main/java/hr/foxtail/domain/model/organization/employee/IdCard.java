@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 builder 2019-01-14
  */
-public final class IdCard {
+public class IdCard {
     private static final Pattern NUMBER = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
     private long id;
     private String number;

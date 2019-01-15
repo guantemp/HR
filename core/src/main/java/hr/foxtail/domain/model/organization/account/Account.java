@@ -23,7 +23,7 @@ import java.util.StringJoiner;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class Account {
+public class Account {
     private String accountNumber;
     private String accountName;
     private Bank bankOfDeposit;

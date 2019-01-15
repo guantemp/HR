@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class OrganizationBasicAccountChanged implements DomainEvent {
+public class OrganizationBasicAccountChanged implements DomainEvent {
     private Account basicAccount;
     private String creditNumber;
     private LocalDateTime occurredOn;

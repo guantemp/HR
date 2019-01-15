@@ -29,21 +29,21 @@ public interface DepartmentRepository {
     Department[] findByOrganization(String organizationUnifiedSocialCreditCode);
 
     /**
-     * @param deptId
+     * @param parentId
      * @return
      */
-    Department[] findByDepartment(DeptId deptId);
+    Department[] findChild(String parentId);
 
     /**
-     * @param deptId
+     * @param id
      * @return
      */
-    Department find(DeptId deptId);
+    Department find(String id);
 
     /**
-     * @param deptId
+     * @param id
      */
-    void remove(DeptId deptId);
+    void remove(String id);
 
     /**
      * @param department

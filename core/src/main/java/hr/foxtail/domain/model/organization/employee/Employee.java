@@ -21,7 +21,7 @@ package hr.foxtail.domain.model.organization.employee;
  * @since JDK8.0
  * @version 0.0.1 2019-01-15
  */
-public final class Employee {
+public class Employee {
     private Person person;
     private String id;
     private String jobNumber;

@@ -22,4 +22,6 @@ package hr.foxtail.domain.model.organization.employee;
  * @version 0.0.1 2019-01-15
  */
 public class Job {
+    private String name;
+    private String desc;
 }

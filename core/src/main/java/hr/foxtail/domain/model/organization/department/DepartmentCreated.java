@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public final class DepartmentCreated implements DomainEvent {
+public  class DepartmentCreated implements DomainEvent {
     private String description;
     private String name;
     private String id;
