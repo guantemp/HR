@@ -15,6 +15,12 @@
  */
 package hr.foxtail.domain.model.organization.employee;
 
+import hr.foxtail.domain.model.organization.License;
+
+import java.awt.image.BufferedImage;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
@@ -22,13 +28,25 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 builder 2019-01-14
  */
-public class IdCard {
-    private static final Pattern NUMBER = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
+public class IdCard extends License {
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
     private long id;
-    private String number;
-    private String name;
     private Nation nation;
     private Address address;
+
+    public IdCard(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive,
+                  long id, Nation nation, Address address) {
+        super(type, number, issuer, issuerOn, expiryOn, positive);
+        this.id = id;
+        this.nation = nation;
+        this.address = address;
+    }
+
+    @Override
+    protected void setType(Type type) {
+        type = Type.IDCard;
+        super.setType(type);
+    }
 
     public Gender gender() {
         return Gender.MALE;
@@ -38,20 +56,6 @@ public class IdCard {
         return nation;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        IdCard idCard = (IdCard) o;
-
-        return number != null ? number.equals(idCard.number) : idCard.number == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return number != null ? number.hashCode() : 0;
-    }
 
     public enum Gender {
         MALE, FEMALE
@@ -59,5 +63,18 @@ public class IdCard {
 
     public enum Nation {
         HAN, BUYI
+    }
+
+    public LocalDate born() {
+        return null;
+    }
+
+    @Override
+    protected void setNumber(String number) {
+        number = Objects.requireNonNull(number, "number is required");
+        Matcher matcher = NUMBER_PATTERN.matcher(number);
+        if (!matcher.matches())
+            throw new IllegalArgumentException("Non-conforming ID number.");
+        super.setNumber(number);
     }
 }

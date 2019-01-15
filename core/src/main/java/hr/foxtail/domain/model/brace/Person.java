@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package hr.foxtail.domain.model.organization.employee;
+package hr.foxtail.domain.model.brace;
+
+import hr.foxtail.domain.model.organization.License;
 
 import java.util.regex.Pattern;
 
@@ -24,10 +26,22 @@ import java.util.regex.Pattern;
  * @version 0.0.1 2019-01-14
  */
 public class Person {
+    private License license;
+    private String weChat;
+
     private static final Pattern MOBILE_PHONE_PATTERN = Pattern.compile("^[1](([3][0-9])|([4][5,7,9])|([5][^4,6,9])|([6][6])|([7][3,5,6,7,8])|([8][0-9])|([9][8,9]))[0-9]{8}$");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
-    private IdCard idCard;
-    private Passport passport;
+    private String qq;
     private String mobilePhone;
     private String email;
+    private Education education;
+    private Marriage marriage;
+
+    public enum Education {
+        PRIMARY_SCHOOL, JUNIOR_MIDDLE_SCHOOL, HIGHT_SCHOOL, JUNIOR_DEGREE, BACHELOR_DEGREE, MASTER, DOCTOR, OTHER
+    }
+
+    public enum Marriage {
+        MARRIED, UNMARRIED
+    }
 }

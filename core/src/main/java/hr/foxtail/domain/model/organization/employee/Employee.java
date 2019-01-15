@@ -16,6 +16,11 @@
 
 package hr.foxtail.domain.model.organization.employee;
 
+import hr.foxtail.domain.model.brace.Person;
+import hr.foxtail.domain.model.organization.License;
+
+import java.util.Set;
+
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
@@ -26,4 +31,7 @@ public class Employee {
     private String id;
     private String jobNumber;
     private Job job;
+    private String departmentId;
+    private Set<License> licenses;
+    private String nickname;
 }

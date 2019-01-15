@@ -17,35 +17,40 @@ package hr.foxtail.domain.model.organization;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
  * @version 0.0.1 2019-01-07
  */
-public  class License {
+public class License {
+    private Type type;
+    private BufferedImage positive;
     private LocalDate expiryOn;
     private LocalDate issueOn;
     private String issuer;
-    private String name;
+    private BufferedImage opposite;
     private String number;
-    private BufferedImage picture;
-
     /**
-     * @param name
+     * @param type
      * @param number
      */
-    public License(String name, String number) {
-        this(name, number, null, null, null, null);
+    public License(Type type, String number) {
+        this(type, number, null, null, null, null);
     }
 
-    public License(String name, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage picture) {
-        setName(name);
+    public License(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive) {
+        setType(type);
         setNumber(number);
         this.issuer = issuer;
         this.issueOn = issuerOn;
         this.expiryOn = expiryOn;
-        this.picture = picture;
+        this.positive = positive;
+    }
+
+    public BufferedImage opposite() {
+        return opposite;
     }
 
     @Override
@@ -57,10 +62,10 @@ public  class License {
         if (getClass() != obj.getClass())
             return false;
         License other = (License) obj;
-        if (name == null) {
-            if (other.name != null)
+        if (type == null) {
+            if (other.type != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!type.equals(other.type))
             return false;
         if (number == null) {
             if (other.number != null)
@@ -70,21 +75,26 @@ public  class License {
         return true;
     }
 
-    public LocalDate expiryOn() {
-        return expiryOn;
+    public boolean isExpired() {
+        LocalDate now = LocalDate.now();
+        return now.isBefore(expiryOn) && now.isAfter(issueOn);
     }
 
-    public boolean isExpired() {
-        return false;
+    public LocalDate expiryOn() {
+        return expiryOn;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
         result = prime * result + ((number == null) ? 0 : number.hashCode());
         return result;
+    }
+
+    public Type name() {
+        return type;
     }
 
     public LocalDate issueOn() {
@@ -95,34 +105,32 @@ public  class License {
         return issuer;
     }
 
-    public String name() {
-        return name;
+    public BufferedImage positive() {
+        return positive;
     }
 
     public String number() {
         return number;
     }
 
-    public BufferedImage picture() {
-        return picture;
-    }
-
-    protected void setName(String name) {
-        if (null == name || name.trim().isEmpty())
-            throw new IllegalArgumentException("Must provide a name or initial.");
-        this.name = name;
+    protected void setType(Type type) {
+        Objects.requireNonNull(type, "type is required.");
+        this.type = type;
     }
 
     protected void setNumber(String number) {
-        if (null == number || number.trim().isEmpty())
-            throw new IllegalArgumentException("Must provide a number or initial.");
+        number = Objects.requireNonNull(number, "number is required").trim();
         this.number = number;
     }
 
     @Override
     public String toString() {
-        return "License [name=" + name + ", number=" + number + ", issuer=" + issuer + ", issueOn=" + issueOn
-                + ", expiryOn=" + expiryOn + ", picture=" + picture + "]";
+        return "License [type=" + type + ", number=" + number + ", issuer=" + issuer + ", issueOn=" + issueOn
+                + ", expiryOn=" + expiryOn + ", positive=" + positive + "]";
+    }
+
+    public enum Type {
+        IDCard, Passport
     }
 
 }

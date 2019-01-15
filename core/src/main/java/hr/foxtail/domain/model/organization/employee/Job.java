@@ -23,5 +23,5 @@ package hr.foxtail.domain.model.organization.employee;
  */
 public class Job {
     private String name;
-    private String desc;
+    private String description;
 }
