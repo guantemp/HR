@@ -30,21 +30,22 @@ import java.util.regex.Pattern;
  */
 public class IdCard extends License {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
-    private long id;
+    private long readerID;
     private Nation nation;
     private Address address;
 
-    public IdCard(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive,
-                  long id, Nation nation, Address address) {
-        super(type, number, issuer, issuerOn, expiryOn, positive);
-        this.id = id;
+    public IdCard(String number, long readerID, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive, BufferedImage opposite,
+                  Nation nation, Address address) {
+        super(Type.IDCARD, number, issuer, issuerOn, expiryOn, positive, opposite);
+        this.readerID = readerID;
         this.nation = nation;
         this.address = address;
     }
 
+
     @Override
     protected void setType(Type type) {
-        type = Type.IDCard;
+        type = Type.IDCARD;
         super.setType(type);
     }
 

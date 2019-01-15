@@ -37,16 +37,17 @@ public class License {
      * @param number
      */
     public License(Type type, String number) {
-        this(type, number, null, null, null, null);
+        this(type, number, null, null, null, null, null);
     }
 
-    public License(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive) {
+    public License(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive, BufferedImage opposite) {
         setType(type);
         setNumber(number);
         this.issuer = issuer;
         this.issueOn = issuerOn;
         this.expiryOn = expiryOn;
         this.positive = positive;
+        this.opposite = opposite;
     }
 
     public BufferedImage opposite() {
@@ -130,7 +131,6 @@ public class License {
     }
 
     public enum Type {
-        IDCard, Passport
+        IDCARD, PASSPORT
     }
-
 }
