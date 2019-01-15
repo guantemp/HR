@@ -27,14 +27,37 @@ public final class IdCard {
     private long id;
     private String number;
     private String name;
+    private Nation nation;
     private Address address;
 
-    public Sex sex() {
-        return Sex.MAN;
+    public Gender gender() {
+        return Gender.MALE;
     }
 
-    public enum Sex {
-        WOMEN, MAN, UNKOWN
+    public Nation nation() {
+        return nation;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IdCard idCard = (IdCard) o;
+
+        return number != null ? number.equals(idCard.number) : idCard.number == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return number != null ? number.hashCode() : 0;
+    }
+
+    public enum Gender {
+        MALE, FEMALE
+    }
+
+    public enum Nation {
+        HAN, BUYI
+    }
 }

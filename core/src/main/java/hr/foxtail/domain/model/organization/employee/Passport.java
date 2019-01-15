@@ -13,19 +13,14 @@
  *  See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package hr.foxtail.domain.model.organization.employee;
 
-import cc.foxtail.investor.infrastructure.PersonAdapter;
-
 /***
- * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
+ * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2016年12月22日
+ * @version 0.0.1 2019-01-15
  */
-public final class PersonService {
-    private PersonAdapter adapter = new PersonAdapter();
-
-    public Person personFrom(long id) {
-        return adapter.toPerson(id);
-    }
+public class Passport {
+    private String number;
 }
