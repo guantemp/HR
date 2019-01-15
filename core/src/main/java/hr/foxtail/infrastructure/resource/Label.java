@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package hr.foxtail.domain.model.organization.employee;
+package hr.foxtail.infrastructure.resource;
+
+
+import mi.foxtail.util.NLS;
 
 /***
- * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
+ * @author <a href="www.foxtail.cc/authors/guan xianghuang">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2019-01-15
+ * @version 0.0.1 builder 2019-01-15
  */
-public class Passport {
-    private String number;
+public class Label extends NLS {
+    private static final String BUNDLE_NAME = "hr.foxtail.infrastructure.resource.label"; //$NON-NLS-1$
+
+    public static String NATION_HAN;
+
+    static {
+        NLS.initializeMessages(BUNDLE_NAME, Label.class);
+    }
 }

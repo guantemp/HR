@@ -15,6 +15,8 @@
  */
 package hr.foxtail.domain.model.organization;
 
+import hr.foxtail.domain.model.brace.Name;
+
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0

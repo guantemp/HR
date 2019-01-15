@@ -36,6 +36,16 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>cc.foxtail</groupId>
+            <artifactId>mi-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cc.foxtail</groupId>
+            <artifactId>mi-crypto</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.arangodb</groupId>
             <artifactId>arangodb-java-driver-async</artifactId>
             <version>5.0.3</version>

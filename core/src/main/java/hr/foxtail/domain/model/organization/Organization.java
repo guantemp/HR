@@ -17,6 +17,7 @@ package hr.foxtail.domain.model.organization;
 
 
 import hr.foxtail.domain.DomainRegistry;
+import hr.foxtail.domain.model.brace.Name;
 import hr.foxtail.domain.model.location.Location;
 import hr.foxtail.domain.model.organization.account.Account;
 import hr.foxtail.domain.model.organization.account.Alibaba;

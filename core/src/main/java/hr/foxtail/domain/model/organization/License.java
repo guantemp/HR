@@ -18,6 +18,7 @@ package hr.foxtail.domain.model.organization;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /***
  * @author <a href="www.foxtail.cc/authors/guan xiangHuan">guan xiangHuan</a>
@@ -25,23 +26,20 @@ import java.util.Objects;
  * @version 0.0.1 2019-01-07
  */
 public class License {
-    private Type type;
     private BufferedImage positive;
     private LocalDate expiryOn;
     private LocalDate issueOn;
     private String issuer;
     private BufferedImage opposite;
     private String number;
-    /**
-     * @param type
-     * @param number
-     */
-    public License(Type type, String number) {
-        this(type, number, null, null, null, null, null);
+    private String name;
+
+    public License(String name, String number) {
+        this(name, number, null, null, null, null, null);
     }
 
-    public License(Type type, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive, BufferedImage opposite) {
-        setType(type);
+    public License(String name, String number, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive, BufferedImage opposite) {
+        setName(name);
         setNumber(number);
         this.issuer = issuer;
         this.issueOn = issuerOn;
@@ -50,31 +48,15 @@ public class License {
         this.opposite = opposite;
     }
 
+    private void setName(String name) {
+        name = Objects.requireNonNull(name, "name is required.").trim();
+        this.name = name;
+    }
+
     public BufferedImage opposite() {
         return opposite;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        License other = (License) obj;
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-        if (number == null) {
-            if (other.number != null)
-                return false;
-        } else if (!number.equals(other.number))
-            return false;
-        return true;
-    }
 
     public boolean isExpired() {
         LocalDate now = LocalDate.now();
@@ -85,18 +67,6 @@ public class License {
         return expiryOn;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        result = prime * result + ((number == null) ? 0 : number.hashCode());
-        return result;
-    }
-
-    public Type name() {
-        return type;
-    }
 
     public LocalDate issueOn() {
         return issueOn;
@@ -114,23 +84,49 @@ public class License {
         return number;
     }
 
-    protected void setType(Type type) {
-        Objects.requireNonNull(type, "type is required.");
-        this.type = type;
-    }
-
     protected void setNumber(String number) {
         number = Objects.requireNonNull(number, "number is required").trim();
         this.number = number;
     }
 
-    @Override
-    public String toString() {
-        return "License [type=" + type + ", number=" + number + ", issuer=" + issuer + ", issueOn=" + issueOn
-                + ", expiryOn=" + expiryOn + ", positive=" + positive + "]";
+    public String name() {
+        return name;
     }
 
-    public enum Type {
-        IDCARD, PASSPORT
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", License.class.getSimpleName() + "[", "]")
+                .add("positive=" + positive)
+                .add("expiryOn=" + expiryOn)
+                .add("issueOn=" + issueOn)
+                .add("issuer='" + issuer + "'")
+                .add("opposite=" + opposite)
+                .add("number='" + number + "'")
+                .add("name='" + name + "'")
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        License license = (License) o;
+
+        if (expiryOn != null ? !expiryOn.equals(license.expiryOn) : license.expiryOn != null) return false;
+        if (issueOn != null ? !issueOn.equals(license.issueOn) : license.issueOn != null) return false;
+        if (issuer != null ? !issuer.equals(license.issuer) : license.issuer != null) return false;
+        if (number != null ? !number.equals(license.number) : license.number != null) return false;
+        return name != null ? name.equals(license.name) : license.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = expiryOn != null ? expiryOn.hashCode() : 0;
+        result = 31 * result + (issueOn != null ? issueOn.hashCode() : 0);
+        result = 31 * result + (issuer != null ? issuer.hashCode() : 0);
+        result = 31 * result + (number != null ? number.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

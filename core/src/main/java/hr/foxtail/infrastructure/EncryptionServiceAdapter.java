@@ -17,12 +17,11 @@
  */
 package hr.foxtail.infrastructure;
 
-import cc.foxtail.license.application.CryptoService;
 
 /***
  * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2016年12月23日
+ * @version 0.0.1 2019-01-15
  */
 public class EncryptionServiceAdapter {
     public String encryp(long ownerId, String source) {

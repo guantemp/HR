@@ -13,9 +13,7 @@
  *  See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package hr.foxtail.domain.model.organization.employee;
-
-import hr.foxtail.domain.model.organization.License;
+package hr.foxtail.domain.model.brace;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -28,24 +26,18 @@ import java.util.regex.Pattern;
  * @since JDK8.0
  * @version 0.0.1 builder 2019-01-14
  */
-public class IdCard extends License {
+public class IdCard {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
     private long readerID;
+    private String number;
     private Nation nation;
     private Address address;
 
     public IdCard(String number, long readerID, String issuer, LocalDate issuerOn, LocalDate expiryOn, BufferedImage positive, BufferedImage opposite,
                   Nation nation, Address address) {
-        super(Type.IDCARD, number, issuer, issuerOn, expiryOn, positive, opposite);
         this.readerID = readerID;
         this.nation = nation;
         this.address = address;
-    }
-
-    @Override
-    protected void setType(Type type) {
-        type = Type.IDCARD;
-        super.setType(type);
     }
 
     public Gender gender() {
@@ -60,20 +52,19 @@ public class IdCard extends License {
         MALE, FEMALE
     }
 
-    public enum Nation {
-        HAN, BUYI
+    private void setNumber(String number) {
+        number = Objects.requireNonNull(number, "number is required");
+        Matcher matcher = NUMBER_PATTERN.matcher(number);
+        if (!matcher.matches())
+            throw new IllegalArgumentException("Non-conforming ID number.");
+        this.number = number;
     }
 
     public LocalDate born() {
         return null;
     }
 
-    @Override
-    protected void setNumber(String number) {
-        number = Objects.requireNonNull(number, "number is required");
-        Matcher matcher = NUMBER_PATTERN.matcher(number);
-        if (!matcher.matches())
-            throw new IllegalArgumentException("Non-conforming ID number.");
-        super.setNumber(number);
+    public enum Nation {
+        HAN, BUYI, MENG_GU, HUI, ZANG
     }
 }

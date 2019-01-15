@@ -17,6 +17,7 @@ package hr.foxtail.domain.model.organization;
 
 
 import event.foxtail.alpha.domain.model.DomainEvent;
+import hr.foxtail.domain.model.brace.Name;
 
 import java.time.LocalDateTime;
 
