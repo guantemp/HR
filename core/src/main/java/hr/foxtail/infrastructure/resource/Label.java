@@ -28,6 +28,7 @@ public class Label extends NLS {
     private static final String BUNDLE_NAME = "hr.foxtail.infrastructure.resource.label"; //$NON-NLS-1$
 
     public static String NATION_HAN;
+    public static String PRIMARY_SCHOOL;
 
     static {
         NLS.initializeMessages(BUNDLE_NAME, Label.class);

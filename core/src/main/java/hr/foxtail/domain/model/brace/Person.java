@@ -16,8 +16,6 @@
 
 package hr.foxtail.domain.model.brace;
 
-import hr.foxtail.domain.model.organization.License;
-
 import java.util.regex.Pattern;
 
 /***
@@ -26,7 +24,6 @@ import java.util.regex.Pattern;
  * @version 0.0.1 2019-01-14
  */
 public class Person {
-    private License license;
     private String weChat;
     private static final Pattern MOBILE_PHONE_PATTERN = Pattern.compile("^[1](([3][0-9])|([4][5,7,9])|([5][^4,6,9])|([6][6])|([7][3,5,6,7,8])|([8][0-9])|([9][8,9]))[0-9]{8}$");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");

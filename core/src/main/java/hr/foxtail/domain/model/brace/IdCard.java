@@ -30,6 +30,7 @@ public class IdCard {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$");
     private long readerID;
     private String number;
+    private String name;
     private Nation nation;
     private Address address;
 
