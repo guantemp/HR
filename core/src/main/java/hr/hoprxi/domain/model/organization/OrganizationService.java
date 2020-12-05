@@ -14,18 +14,29 @@
  * limitations under the License.
  */
 
-package hr.hoprxi.domain.model.organization.employee;
+package hr.hoprxi.domain.model.organization;
 
-import hr.hoprxi.domain.model.brace.IdCard;
-import hr.hoprxi.domain.model.brace.Name;
+import hr.hoprxi.domain.model.location.Location;
+
+import java.util.Objects;
 
 /**
  * @author <a href="www.hoprxi.com/author/guan xianghuang">guan xiangHuan</a>
  * @version 0.0.1 2020-12-05
  * @since JDK8.0
  */
-public class Employee {
-    private String id;
-    private IdCard card;
-    private Name nickname;
+public class OrganizationService {
+    private OrganizationRepository repository;
+
+    public OrganizationService(OrganizationRepository repository) {
+        this.repository = Objects.requireNonNull(repository, "repository required");
+    }
+
+    public static boolean validatorOrganizationExists(String unifiedSocialCreditCode) {
+        return true;
+    }
+
+    public static Location getOrganizationLocation(String unifiedSocialCreditCode) {
+        return null;
+    }
 }

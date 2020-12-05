@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package hr.hoprxi.domain.model.organization.employee;
-
-import hr.hoprxi.domain.model.brace.Person;
-import hr.hoprxi.domain.model.organization.License;
-
-import java.util.Set;
+package hr.hoprxi.domain.model.organization.job;
 
 /***
  * @author <a href="www.hoprxi.com/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
  * @version 0.0.1 2019-01-15
  */
-public class Employee1 {
-    private Person person;
-    private String id;
-    private String jobNumber;
-    private Job job;
-    private String departmentId;
-    private Set<License> licenses;
-    private String nickname;
+public class Job {
+    private String name;
+    private String description;
 }

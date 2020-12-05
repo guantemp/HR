@@ -28,4 +28,8 @@ public class DomainRegistry {
     public static DomainEventPublisher domainEventPublisher() {
         return SimpleDomainEventPublisher.instance();
     }
+
+    public boolean validatorOrganizationUnifiedSocialCreditCode(String unifiedSocialCreditCode) {
+        return true;
+    }
 }

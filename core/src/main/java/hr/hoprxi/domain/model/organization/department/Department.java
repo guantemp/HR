@@ -15,10 +15,10 @@
  */
 package hr.hoprxi.domain.model.organization.department;
 
-
 import hr.hoprxi.domain.DomainRegistry;
 import hr.hoprxi.domain.model.location.Location;
 import hr.hoprxi.domain.model.organization.Contact;
+import hr.hoprxi.domain.model.organization.OrganizationService;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -28,48 +28,59 @@ import java.util.StringJoiner;
 /***
  * @author <a href="www.hoprxi.com/authors/guan xiangHuan">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2019-01-07
+ * @version 0.0.1 2020-12-05
  */
 public class Department {
-    private String description;
     //Depth of department tree
     private static final int DEPTH = 8;
     private String name;
     private String id;
-    private String organizationId;
+    private String organizationUnifiedSocialCreditCode;
     private Deque<String> treePath;
     private Location location;
     private Contact contact;
+    private String description;
 
     /**
-     * @param organizationId
+     * @param organizationUnifiedSocialCreditCode
      * @param id
      * @param name
      */
-    protected Department(String organizationId, String id, String name) {
-        this(organizationId, id, name, null, null, null);
+    protected Department(String organizationUnifiedSocialCreditCode, String id, String name) {
+        this(organizationUnifiedSocialCreditCode, id, name, null, null, null);
     }
 
     /**
-     * @param organizationId
+     * @param organizationUnifiedSocialCreditCode
      * @param id
      * @param name
      * @param location
      * @param contact
      * @param description
      */
-    protected Department(String organizationId, String id, String name, Location location, Contact contact, String description) {
-        setOrganizationId(organizationId);
+    protected Department(String organizationUnifiedSocialCreditCode, String id, String name, Location location, Contact contact, String description) {
+        setOrganizationUnifiedSocialCreditCode(organizationUnifiedSocialCreditCode);
         setId(id);
         setName(name);
-        this.location = location;
+        setLocation(location);
         this.contact = contact;
         this.description = description;
     }
 
-    private void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
+    private void setLocation(Location location) {
+        if (location == null) {
+            location = OrganizationService.getOrganizationLocation(organizationUnifiedSocialCreditCode);
+        }
+        this.location = location;
     }
+
+    private void setOrganizationUnifiedSocialCreditCode(String organizationUnifiedSocialCreditCode) {
+        Objects.requireNonNull(organizationUnifiedSocialCreditCode, "organizationUnifiedSocialCreditCode required");
+        if (!OrganizationService.validatorOrganizationExists(organizationUnifiedSocialCreditCode))
+            throw new IllegalArgumentException("organizationUnifiedSocialCreditCode illegal");
+        this.organizationUnifiedSocialCreditCode = organizationUnifiedSocialCreditCode;
+    }
+
     private void setName(String name) {
         this.name = Objects.requireNonNull(id, "name is required.").trim();
     }
@@ -99,7 +110,7 @@ public class Department {
                 .add("description='" + description + "'")
                 .add("id='" + id + "'")
                 .add("name='" + name + "'")
-                .add("organizationId='" + organizationId + "'")
+                .add("organizationUnifiedSocialCreditCode='" + organizationUnifiedSocialCreditCode + "'")
                 .add("location=" + location)
                 .add("contact=" + contact)
                 .toString();
@@ -149,7 +160,7 @@ public class Department {
     }
 
     public String organizationId() {
-        return organizationId;
+        return organizationUnifiedSocialCreditCode;
     }
 
     public Contact contact() {

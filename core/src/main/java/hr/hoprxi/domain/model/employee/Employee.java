@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package hr.hoprxi.domain.model.organization.employee;
+package hr.hoprxi.domain.model.employee;
 
-/***
- * @author <a href="www.hoprxi.com/authors/guan xiangHuan">guan xiangHuan</a>
+import hr.hoprxi.domain.model.brace.IdCard;
+import hr.hoprxi.domain.model.brace.Name;
+import hr.hoprxi.domain.model.brace.Person;
+
+/**
+ * @author <a href="www.hoprxi.com/author/guan xianghuang">guan xiangHuan</a>
+ * @version 0.0.1 2020-12-05
  * @since JDK8.0
- * @version 0.0.1 2019-01-15
  */
-public class Job {
-    private String name;
-    private String description;
+public class Employee {
+    private String id;
+    private String jobNumber;
+    private IdCard card;
+    private Name nickname;
+    private Person person;
+    private Contacts emergencyContact;
 }
