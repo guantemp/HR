@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 www.foxtail.cc All rights Reserved.
+ * Copyright (c) 2020 www.hoprxi.com All rights Reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package hr.hoprxi.infrastructure;
 
-import cc.foxtail.investor.domain.model.person.Person;
 
 /***
  * @author <a href="mailto:myis1000@gmail.com">guan xiangHuan</a>
@@ -23,6 +22,7 @@ import cc.foxtail.investor.domain.model.person.Person;
  * @version 0.0.1 2016年12月22日
  */
 public final class PersonAdapter {
+    /*
     public void registerPerson(Person person) {
 
     }
@@ -30,4 +30,5 @@ public final class PersonAdapter {
     public Person toPerson(long id) {
         return new Person(id, "text", "242347@qq.com", "13687288931289");
     }
+    */
 }

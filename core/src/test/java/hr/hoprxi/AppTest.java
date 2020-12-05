@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 www.foxtail.cc All rights Reserved.
+ * Copyright (c) 2020 www.hoprxi.com All rights Reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 
 package hr.hoprxi;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 /**
  * Unit test for simple App.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 www.foxtail.cc All rights Reserved.
+ * Copyright (c) 2020 www.hoprxi.com All rights Reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,22 +16,16 @@
 
 package hr.hoprxi.domain.model.organization.employee;
 
-import hr.hoprxi.domain.model.brace.Person;
-import hr.hoprxi.domain.model.organization.License;
+import hr.hoprxi.domain.model.brace.IdCard;
+import hr.hoprxi.domain.model.brace.Name;
 
-import java.util.Set;
-
-/***
- * @author <a href="www.hoprxi.com/authors/guan xiangHuan">guan xiangHuan</a>
+/**
+ * @author <a href="www.hoprxi.com/author/guan xianghuang">guan xiangHuan</a>
+ * @version 0.0.1 2020-12-05
  * @since JDK8.0
- * @version 0.0.1 2019-01-15
  */
 public class Employee {
-    private Person person;
     private String id;
-    private String jobNumber;
-    private Job job;
-    private String departmentId;
-    private Set<License> licenses;
-    private String nickname;
+    private IdCard card;
+    private Name nickname;
 }

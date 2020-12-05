@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 www.foxtail.cc All rights Reserved.
+ * Copyright (c) 2020 www.hoprxi.com All rights Reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class Organization {
     //Depth of organization tree
     private static final int DEPTH = 16;
     private String aboutUs;
-    private Account BasicAccount;
+    private Account basicAccount;
     private Account generalAccount;
     private Alibaba alibaba;
     private WeChat weChat;
@@ -68,7 +68,7 @@ public class Organization {
         this.contact = contact;
         this.aboutUs = aboutUs;
         this.logo = logo;
-        this.BasicAccount = basicAccount;
+        this.basicAccount = basicAccount;
         this.generalAccount = generalAccount;
         this.alibaba = alibaba;
         this.weChat = weChat;
@@ -200,7 +200,7 @@ public class Organization {
 
 
     public Account basicAccount() {
-        return BasicAccount;
+        return basicAccount;
     }
 
     public Account generalAccount() {
@@ -235,7 +235,7 @@ public class Organization {
     public String toString() {
         return new StringJoiner(", ", Organization.class.getSimpleName() + "[", "]")
                 .add("aboutUs='" + aboutUs + "'")
-                .add("BasicAccount=" + BasicAccount)
+                .add("basicAccount=" + basicAccount)
                 .add("generalAccount=" + generalAccount)
                 .add("alibaba=" + alibaba)
                 .add("weChat=" + weChat)

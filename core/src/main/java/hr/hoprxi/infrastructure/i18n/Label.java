@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package hr.hoprxi.domain.model.brace;
+package hr.hoprxi.infrastructure.i18n;
+
+import mi.hoprxi.util.NLS;
 
 /***
- * @author <a href="www.hoprxi.com/authors/guan xiangHuan">guan xiangHuan</a>
+ * @author <a href="www.hoprxi.com/authors/guan xianghuang">guan xiangHuan</a>
  * @since JDK8.0
- * @version 0.0.1 2019-01-15
+ * @version 0.0.1 builder 2020-12-05
  */
-public class Passport {
-    private String number;
+public class Label extends NLS {
+    private static final String BUNDLE_NAME = "hr.hoprxi.infrastructure.i18n.label"; //$NON-NLS-1$
+
+    public static String NATION_HAN;
+    public static String PRIMARY_SCHOOL;
+
+    static {
+        NLS.initializeMessages(BUNDLE_NAME, Label.class);
+    }
 }
